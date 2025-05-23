@@ -2,8 +2,9 @@ workflows:
   ios-release:
     name: iOS Release
     environment:
+      groups:
+        - ios-credentials  # This line is critical — it pulls from the team-level group
       vars:
-        APP_ID: "adc627"
         BUNDLE_ID: "com.lovegpt.app"
       flutter: stable
       xcode: "16.3"
@@ -13,16 +14,12 @@ workflows:
           echo $CM_CERTIFICATE | base64 --decode > certificate.p12
           echo $CM_PROVISIONING_PROFILE | base64 --decode > profile.mobileprovision
 
-          # Create and unlock a keychain
-          security create-keychain -p $CERT_PASSWORD build.keychain
+          security create-keychain -p "$CERTIFICATE_PASSWORD" build.keychain
           security default-keychain -s build.keychain
-          security unlock-keychain -p $CERT_PASSWORD build.keychain
+          security unlock-keychain -p "$CERTIFICATE_PASSWORD" build.keychain
           security set-keychain-settings build.keychain
 
-          # Import certificate
-          security import certificate.p12 -k build.keychain -P $CERT_PASSWORD -T /usr/bin/codesign
-
-          # List keychains to verify
+          security import certificate.p12 -k build.keychain -P "$CERTIFICATE_PASSWORD" -T /usr/bin/codesign
           security list-keychains
 
       - name: Build iOS Release
@@ -35,5 +32,7 @@ workflows:
       - build/ios/ipa/*.ipa
     publishing:
       app_store_connect:
-        apple_id: "${APPLE_ID}"
-        password: "${APP_SPECIFIC_PASSWORD}"
+        apple_id: "$APPLE_ID"
+        password: "$APP_SPECIFIC_PASSWORD"
+        submit_to_testflight: true
+        submit_to_app_store: false
