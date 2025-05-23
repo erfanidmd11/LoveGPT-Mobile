@@ -1,5 +1,5 @@
 name: lovegpt_mobileapp
-description: "A new Flutter project."
+description: "LoveGPT Mobile App - AI-driven Relationship Intelligence & Personal Evolution."
 publish_to: 'none'
 
 version: 1.0.0+1
@@ -11,14 +11,13 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # Firebase (Downgraded to compatible nanopb range)
+  # Firebase (fully compatible with current build toolchain)
   firebase_core: ^3.13.1
-  firebase_auth: ^5.5.3
-  firebase_database: ^11.3.5
-  firebase_storage: ^12.4.5
+  firebase_auth: ^5.5.4
+  firebase_database: ^11.3.6
+  firebase_storage: ^12.4.6
   cloud_firestore: ^5.6.8
   firebase_messaging: ^15.2.6
-
 
   cupertino_icons: ^1.0.8
 
@@ -57,5 +56,6 @@ flutter:
           weight: 700
           style: italic
 
+# 🔐 Lock this to avoid conflicts between Firebase SDKs
 dependency_overrides:
   firebase_core: ^3.13.1

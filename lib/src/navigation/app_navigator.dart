@@ -8,8 +8,6 @@ import 'package:lovegpt_mobileapp/src/screens/waitlist_request.dart';
 import 'package:lovegpt_mobileapp/src/screens/success_page.dart';
 import 'package:lovegpt_mobileapp/src/screens/dashboard/dashboard_screen.dart';
 import 'package:lovegpt_mobileapp/src/screens/onboarding_intro_page.dart';
-
-// ✅ Keep only this — remove other conflicting import if it exists elsewhere
 import 'package:lovegpt_mobileapp/src/onboarding/steps/step1_invitation_code.dart';
 
 class AppNavigator extends StatelessWidget {
@@ -23,7 +21,7 @@ class AppNavigator extends StatelessWidget {
       routes: {
         AppRoutes.splash: (context) => const SplashScreen(),
         AppRoutes.phoneEntry: (context) => const PhoneEntryPage(),
-        AppRoutes.otp: (context) => const OTPVerificationScreen(phone: ''), // to be passed dynamically
+        AppRoutes.otp: (context) => const OTPVerificationScreen(phone: ''), // to be replaced dynamically
         AppRoutes.invitationEntry: (context) => const InvitationEntryScreen(),
         AppRoutes.waitlist: (context) => const WaitlistRequest(),
         AppRoutes.success: (context) => const SuccessPage(),
