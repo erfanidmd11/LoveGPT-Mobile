@@ -5,8 +5,6 @@ workflows:
       vars:
         APP_ID: "adc627"
         BUNDLE_ID: "com.lovegpt.app"
-        APPLE_ID: your-apple-id@example.com  # <-- Add your Apple ID here
-        APP_SPECIFIC_PASSWORD: your-app-specific-password  # <-- Add this line
       flutter: stable
       xcode: "16.3"
     scripts:
