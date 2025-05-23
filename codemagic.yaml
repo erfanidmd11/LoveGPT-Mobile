@@ -2,6 +2,8 @@ workflows:
   ios-release:
     name: iOS Release
     environment:
+      groups:
+        - lovegpt_ios_release  # 👈 THIS LINKS YOUR GLOBAL VARIABLES
       vars:
         APP_ID: "adc627"
         BUNDLE_ID: "com.lovegpt.app"
