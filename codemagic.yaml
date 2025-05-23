@@ -3,7 +3,7 @@ workflows:
     name: iOS Release
     environment:
       groups:
-        - ios-credentials  # This line is critical — it pulls from the team-level group
+        - ios-credentials
       vars:
         BUNDLE_ID: "com.lovegpt.app"
       flutter: stable
@@ -32,7 +32,6 @@ workflows:
       - build/ios/ipa/*.ipa
     publishing:
       app_store_connect:
-        apple_id: "$APPLE_ID"
-        password: "$APP_SPECIFIC_PASSWORD"
+        api_key: asc-key
         submit_to_testflight: true
         submit_to_app_store: false
