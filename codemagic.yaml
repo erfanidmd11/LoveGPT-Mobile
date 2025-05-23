@@ -2,8 +2,6 @@ workflows:
   ios-release:
     name: iOS Release
     environment:
-      groups:
-        - lovegpt_ios_release  # 👈 THIS LINKS YOUR GLOBAL VARIABLES
       vars:
         APP_ID: "adc627"
         BUNDLE_ID: "com.lovegpt.app"
@@ -14,11 +12,19 @@ workflows:
         script: |
           echo $CM_CERTIFICATE | base64 --decode > certificate.p12
           echo $CM_PROVISIONING_PROFILE | base64 --decode > profile.mobileprovision
-          keychain create --password $KEYCHAIN_PASSWORD
-          keychain import certificate.p12 --password $CERT_PASSWORD
-          keychain set-default
-          security set-keychain-settings
-          keychain list
+
+          # Create and unlock a keychain
+          security create-keychain -p $CERT_PASSWORD build.keychain
+          security default-keychain -s build.keychain
+          security unlock-keychain -p $CERT_PASSWORD build.keychain
+          security set-keychain-settings build.keychain
+
+          # Import certificate
+          security import certificate.p12 -k build.keychain -P $CERT_PASSWORD -T /usr/bin/codesign
+
+          # List keychains to verify
+          security list-keychains
+
       - name: Build iOS Release
         script: |
           flutter clean
