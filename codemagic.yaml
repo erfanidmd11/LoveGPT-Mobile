@@ -1,0 +1,32 @@
+workflows:
+  ios-release:
+    name: iOS Release
+    environment:
+      vars:
+        APP_ID: "adc627"
+        BUNDLE_ID: "com.lovegpt.app"
+      flutter: stable
+      xcode: "16.3"
+    scripts:
+      - name: Set up signing
+        script: |
+          echo $CM_CERTIFICATE | base64 --decode > certificate.p12
+          echo $CM_PROVISIONING_PROFILE | base64 --decode > profile.mobileprovision
+          keychain create --password $KEYCHAIN_PASSWORD
+          keychain import certificate.p12 --password $CERT_PASSWORD
+          keychain set-default
+          security set-keychain-settings
+          keychain list
+      - name: Build iOS Release
+        script: |
+          flutter clean
+          flutter pub get
+          flutter build ipa --release \
+            --export-options-plist=/Users/builder/export_options.plist
+    artifacts:
+      - build/ios/ipa/*.ipa
+    publishing:
+      app_store_connect:
+        apple_id: $APPLE_ID
+        app_id: $APP_ID
+        bundle_id: $BUNDLE_ID
