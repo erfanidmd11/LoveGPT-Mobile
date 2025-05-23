@@ -30,8 +30,10 @@ workflows:
             --export-options-plist=/Users/builder/export_options.plist
     artifacts:
       - build/ios/ipa/*.ipa
-    publishing:
-      app_store_connect:
-        api_key: asc-key
-        submit_to_testflight: true
-        submit_to_app_store: false
+   publishing:
+  app_store_connect:
+    key_id: VZ5MF87W4F
+    issuer_id: 360c6bf7-7101-4beb-b2cb-8463fd743cfd
+    private_key: $APP_STORE_PRIVATE_KEY
+    submit_to_testflight: true
+    submit_to_app_store: false
